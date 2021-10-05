@@ -17,6 +17,15 @@ public class VendedorSopaipillas {
 
     }
 
+    public VendedorSopaipillas(int dineroTotal, int dineroVenta) {
+
+    }
+    public VendedorSopaipillas() {
+
+    }
+
+
+
     public void hacerSopaipillas() {
         int cantidad = -1;
         while (!validarNumeroSopaipillas(cantidad)){
@@ -46,7 +55,6 @@ public class VendedorSopaipillas {
         return 0 < cantidad && cantidad < 300;
     }
 
-
     private void setCantSopaipillas(int cantSopaipillas) {
         this.cantSopaipillas = cantSopaipillas;
     }
@@ -73,12 +81,14 @@ public class VendedorSopaipillas {
     }
 
     public void recibirPago(int pago){
-        if (pago==this.dineroVenta){
-            this.dineroTotal = this.dineroTotal + this.dineroVenta;
+        int vuelto = pago-dineroVenta;
+        if (pago==dineroVenta){
+            dineroTotal = dineroTotal + dineroVenta;
         }
         else{
-            this.dineroTotal = this.dineroTotal + this.dineroVenta;
-            System.out.println("Su vuelto es: " + (pago-this.dineroVenta));
+            dineroTotal = dineroTotal + dineroVenta;
+            System.out.println("Su vuelto es: " + (vuelto));
+            dineroTotal = dineroTotal - vuelto;
 
         }
     }
