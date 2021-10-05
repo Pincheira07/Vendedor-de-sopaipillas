@@ -8,11 +8,12 @@ public class VendedorSopaipillas {
     private int dineroTotal;
     private int dineroVenta;
 
-    public VendedorSopaipillas(String nombre, String nombreCarrito) {
+    public VendedorSopaipillas(String nombre, String nombreCarrito, int dineroTotal) {
         this.nombre = nombre;
         this.nombreCarrito = nombreCarrito;
+        this.dineroTotal =dineroTotal;
         hacerSopaipillas();
-        realizarVenta();
+
 
     }
 
@@ -54,10 +55,48 @@ public class VendedorSopaipillas {
         int cantidad = -1;
         while (!validarSopaipillasVenta(cantidad)){
             System.out.println("¿Cuantas sopaipillas quiere comprar? ");
-            cantidad =leerCantidadSopaipillas();
+            cantidad = leerCantidadSopaipillas();
         }
         return cantidad;
 
+    }
+
+    public void cobrar(){
+        System.out.println("El valor final es: " + this.dineroVenta);
+        int pago = this.dineroVenta-1;
+        while (!validarPago(pago)){
+            System.out.println("Pagar: ");
+            pago = leerPago();
+        }
+        recibirPago(pago);
+
+    }
+
+    public void recibirPago(int pago){
+        if (pago==this.dineroVenta){
+            this.dineroTotal = this.dineroTotal + this.dineroVenta;
+        }
+        else{
+            this.dineroTotal = this.dineroTotal + this.dineroVenta;
+            System.out.println("Su vuelto es: " + (pago-this.dineroVenta));
+
+        }
+    }
+
+    public int leerPago(){
+        int pago = 0;
+        Scanner input = new Scanner(System.in);
+        try {
+            pago = input.nextInt();
+        }catch (InputMismatchException e){
+            input.next();
+            System.out.println("Valor invalido");
+        }
+        return pago;
+    }
+
+    public boolean validarPago(int pago){
+        return this.dineroVenta<=pago && pago<this.dineroTotal;
     }
 
     public boolean validarSopaipillasVenta(int cantidad){
@@ -65,13 +104,14 @@ public class VendedorSopaipillas {
     }
 
     public void venderSopaipillas(int cant){
-        int dineroVentas = 0;
-        int precioSopaipillas = 500;
-
-        dineroVentas = cant*precioSopaipillas;
-        setDinero(dineroVentas);
+        calcularValorVenta(cant);
         setCantSopaipillas(getCantSopaipillas()-cant);
 
+    }
+
+    public int calcularValorVenta(int cantidad){
+        int precioSopaipillas = 500;
+        return this.dineroVenta = precioSopaipillas*cantidad;
     }
 
     public void setDinero(int dineroTotal) {
@@ -84,5 +124,9 @@ public class VendedorSopaipillas {
 
     public int getDinero(){
         return dineroTotal;
+    }
+
+    public void setDineroVenta(int dineroVenta) {
+        this.dineroVenta = dineroVenta;
     }
 }
